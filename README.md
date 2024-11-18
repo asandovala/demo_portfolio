@@ -1,11 +1,29 @@
 # Task Portfolio
 
-> *Construct a simple Portfolio class that has a collection of Stocks and a "Profit" method that receives 2 dates and returns the profit of the Portfolio between those dates. Assume each Stock has a "Price" method that receives a date and returns its price.
-Bonus Track: make the Profit method return the "annualized return" of the portfolio between the given dates.*
+This project implements a Portfolio class that manages a collection of Stocks and provides a method to calculate the profit of the portfolio between two dates. Additionally, it includes a bonus feature to compute the annualized return of the portfolio for the given date range.
 
-The file portfolio has the implementation of the task. You can execute the script that
-has a harcoded test for demo purpose.
+## Usage
+### 1. Clone the Repository
 
-## Execute the script
+Clone the repository to your local machine:
 
-`$ python3 portfolio.py`
+```
+git clone <repository_url>
+cd <repository_name>
+```
+
+### 2. Run the Script
+
+Execute the script to see a demo of the Portfolio class in action:
+
+```
+python3 portfolio.py
+```
+
+### 3. Example Output
+
+The script calculates the annualized return for a hardcoded portfolio:
+
+```
+Annualized return: 12.57 %
+```
