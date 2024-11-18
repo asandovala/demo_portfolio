@@ -3,22 +3,26 @@ from datetime import date
 
 class Stock():
     """
-    Represent an stock that only have 2 values for test purpose, an "initial value"
-    and a "end value".
+    Represent a stock with prices history.
+
+    Attributes:
+        prices (dict): A dictionary mapping `datetime.date` objects to prices.
     """
-    def __init__(self):
-        self.switch = 0
-        self.values = [5, 6.187]
+    def __init__(self, prices):
+        self.prices = prices
 
     def price(self, price_date):
-        price = self.values[self.switch]
-        self.switch = (self.switch + 1) % 2 # Switch between the hardcoded values 
-        return price
+        if price_date not in self.prices:
+            raise ValueError(f"No price available for date: {price_date}")
+        return self.prices[price_date]
 
 class Portfolio():
     """
     Simple Portfolio class that has a collection of Stocks and a "Profit"
     method that return the "annualized return" of the portfolio between the given dates.
+
+    Attributes:
+        stocks (list): A list of `Stock` objects representing the portfolio's holdings.
     """
 
     def __init__(self, stocks):
@@ -26,8 +30,20 @@ class Portfolio():
     
     def profit(self, start_date, end_date):
         """
+        Calculates the annualized return of the portfolio.
+
+        Args:
+            start_date (datetime.date): The start date of the calculation period.
+            end_date (datetime.date): The end date of the calculation period.
+
+        Returns:
+            float: The annualized return.
+
         Reference: https://www.investopedia.com/terms/a/annualized-total-return.asp
         """
+        if start_date >= end_date:
+            raise ValueError("Start date must be before end date.")
+
         days_between_dates = (end_date - start_date).days
         if days_between_dates < 365:
             """
@@ -42,10 +58,16 @@ class Portfolio():
         annualized_return = (1 + cumulative_return)**(365/days_between_dates) - 1
         return annualized_return * 100
 
-stocks = [Stock() for i in range(0, 1)]
-portfolio = Portfolio(stocks)
-
-# Test
+'''
+Set up a simple test.
+'''
 start_date = date(2020, 11, 1)
 end_date = date(2022, 5, 30)
-print("{} %".format(portfolio.profit(start_date, end_date)))
+prices = {
+    start_date: 5,
+    end_date: 6.187
+}
+stocks = [Stock(prices)]
+portfolio = Portfolio(stocks)
+
+print("Annualized return: {} %".format(portfolio.profit(start_date, end_date)))
